@@ -27,28 +27,28 @@ This project is a fully featured E-Commerce backend built to demonstrate the evo
 ## System Architecture (Current State)
 ```mermaid
 flowchart TD
-    Client(["Client / Swagger UI"]) -.->|"HTTP REST"| API
+    Client(["Client / Swagger UI"]) -.->|HTTP REST| API
     
-    subgraph Solution ["ScaleStore"]
+    subgraph Solution [ScaleStore]
         API["ScaleStore.Api<br/>(Controllers, Middleware)"]
         Infra["ScaleStore.Infrastructure<br/>(EF Core, Repositories)"]
         Core(("ScaleStore.Core<br/>(Entities, Interfaces)"))
         
-        API -->|"References"| Core
-        API -->|"DI Wiring"| Infra
-        Infra -->|"Implements"| Core
+        API -->|References| Core
+        API -->|DI Wiring| Infra
+        Infra -->|Implements| Core
     end
 
     DB[("SQL Server")]
-    Infra -->|"Reads/Writes"| DB
+    Infra -->|Reads/Writes| DB
     
-    classDef core fill:#2ea44f,stroke:#fff,stroke-width:2px,color:#fff;
-    classDef infra fill:#0366d6,stroke:#fff,stroke-width:2px,color:#fff;
-    classDef api fill:#6f42c1,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef core fill:#2ea44f,stroke:#fff,stroke-width:2px,color:#fff
+    classDef infra fill:#0366d6,stroke:#fff,stroke-width:2px,color:#fff
+    classDef api fill:#6f42c1,stroke:#fff,stroke-width:2px,color:#fff
     
-    class Core core;
-    class Infra infra;
-    class API api;
+    class Core core
+    class Infra infra
+    class API api
 ```
 ---
 
