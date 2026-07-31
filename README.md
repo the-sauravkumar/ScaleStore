@@ -15,7 +15,7 @@ This project is a fully featured E-Commerce backend built to demonstrate the evo
 
 | Category | Technologies Used |
 | :--- | :--- |
-| **Core** | C#, .NET 8, ASP.NET Core Web API |
+| **Core** | C#, .NET 10, ASP.NET Core Web API |
 | **Architecture** | Clean Architecture, CQRS, Repository Pattern |
 | **Data & Storage** | SQL Server, EF Core, Redis |
 | **Messaging & Background** | RabbitMQ, Hangfire, Hosted Services |
