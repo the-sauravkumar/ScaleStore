@@ -1,0 +1,82 @@
+# ==========================================
+# ScaleStore (Evolutionary Architecture)
+# Tailored .gitignore for .NET / C# / Docker
+# ==========================================
+
+# =========================
+# .NET / C# Core
+# =========================
+bin/
+obj/
+*.user
+*.userprefs
+*.suo
+*.userosscache
+*.sln.docstates
+*.dll
+*.exe
+*.pdb
+*.class
+
+# =========================
+# Visual Studio / Rider / IDEs
+# =========================
+.vs/
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.resharper
+*.resharper.user
+_ReSharper.*/
+
+# =========================
+# NuGet Packages
+# =========================
+*.nupkg
+packages/
+*.nuget.props
+*.nuget.targets
+.nuget/
+
+# =========================
+# Testing (xUnit, Moq, Coverage)
+# =========================
+TestResults/
+*.coverage
+*.coveragexml
+*.trx
+coveragereport/
+
+# =========================
+# Environment & Secrets (CRITICAL)
+# =========================
+# Ignore local environment variables often used with docker-compose
+.env
+.env.local
+.env.dev
+
+# Ignore local appsettings that might contain your SQL/Redis/RabbitMQ passwords
+appsettings.local.json
+appsettings.*.local.json
+
+# User-specific secret IDs (usually handled by dotnet user-secrets, but safe to include)
+secrets.json
+
+# =========================
+# Docker & Infrastructure
+# =========================
+# Ignore local mount directories if you map SQL Server/Redis/RabbitMQ data volumes locally
+docker-data/
+.docker/
+
+# =========================
+# Operating System Files
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
