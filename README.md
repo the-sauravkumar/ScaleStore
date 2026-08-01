@@ -73,34 +73,25 @@ Current design principles:
 
 ---
 
-# Solution Structure
+# Current Solution Structure
 
 ```text
 ScaleStore
 
 ├── ScaleStore.Api
 │   ├── Controllers
-│   ├── Middleware
+│   ├── Properties
 │   ├── Program.cs
 │   └── appsettings.json
 │
-├── ScaleStore.Application
-│   ├── DTOs
-│   ├── Services
-│   ├── Interfaces
-│   └── Validators
-│
 ├── ScaleStore.Core
+│   ├── DTOs
 │   ├── Entities
-│   ├── Interfaces
-│   ├── ValueObjects
-│   └── DomainEvents
+│   └── Mappings
 │
 └── ScaleStore.Infrastructure
     ├── Data
-    ├── Repositories
-    ├── Migrations
-    └── Persistence
+    └── Migrations
 ```
 
 ---
