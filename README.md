@@ -1,104 +1,453 @@
-# ScaleStore (Evolutionary Architecture)
+# ScaleStore – Enterprise E-Commerce Backend Evolution
 
-![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=for-the-badge&logo=dotnet)
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
-![Azure](https://img.shields.io/badge/Azure-0089D6?style=for-the-badge&logo=microsoft-azure&logoColor=white)
-
-## Overview
-This project is a fully featured E-Commerce backend built to demonstrate the evolution of a software system. It starts as a foundational Monolithic CRUD API and progressively scales into a containerized, event-driven architecture utilizing message queues, distributed caching, and background workers.
-
-> **Note:** This repository serves as a practical implementation of Clean Architecture, SOLID principles, and enterprise-grade design patterns.
+> **An enterprise-grade E-Commerce backend built incrementally to demonstrate how real-world systems evolve—from a clean monolith into a scalable distributed architecture.**
 
 ---
 
-## Tech Stack
+# Overview
 
-| Category | Technologies Used |
-| :--- | :--- |
-| **Core** | C#, .NET 8, ASP.NET Core Web API |
-| **Architecture** | Clean Architecture, CQRS, Repository Pattern |
-| **Data & Storage** | SQL Server, EF Core, Redis |
-| **Messaging & Background** | RabbitMQ, Hangfire, Hosted Services |
-| **Testing** | xUnit, Moq, TestContainers |
-| **DevOps & Cloud** | Docker, Docker Compose, Azure App Service, GitHub Actions |
+Most portfolio projects jump straight into microservices, RabbitMQ, Redis, CQRS, and dozens of enterprise patterns.
+
+Real software rarely evolves that way.
+
+**ScaleStore** intentionally grows in phases, introducing each architectural pattern only when the previous design reaches its limitations.
+
+The goal is to understand not only **how** enterprise technologies work, but **why** they are introduced.
 
 ---
 
-## System Architecture (Current State)
-```mermaid
-flowchart TD
-    Client(["Client / Swagger UI"]) -.->|"HTTP REST"| API
-    
-    subgraph Solution ["ScaleStore"]
-        API["ScaleStore.Api<br/>(Controllers, Middleware)"]
-        Infra["ScaleStore.Infrastructure<br/>(EF Core, Repositories)"]
-        Core(("ScaleStore.Core<br/>(Entities, Interfaces)"))
-        
-        API -->|"References"| Core
-        API -->|"DI Wiring"| Infra
-        Infra -->|"Implements"| Core
-    end
+# Project Goals
 
-    DB[("SQL Server")]
-    Infra -->|"Reads/Writes"| DB
-    
-    classDef core fill:#2ea44f,stroke:#fff,stroke-width:2px,color:#fff;
-    classDef infra fill:#0366d6,stroke:#fff,stroke-width:2px,color:#fff;
-    classDef api fill:#6f42c1,stroke:#fff,stroke-width:2px,color:#fff;
-    
-    class Core core;
-    class Infra infra;
-    class API api;
+* Build a production-quality ASP.NET Core backend
+* Follow Clean Architecture principles
+* Learn enterprise software design incrementally
+* Demonstrate architectural evolution
+* Deploy a cloud-ready distributed system
+
+---
+
+# Current Architecture
+
+```text
+Client
+    │
+HTTP REST
+    │
+Controllers
+    │
+Request DTOs
+    │
+Application Services
+    │
+Entity Framework Core
+    │
+SQL Server
+    │
+Response DTOs
 ```
----
 
-## The Journey: System Evolution
-This project is built in deliberate phases to mimic the growth of a real-world startup application.
+Current design principles:
 
-### Phase 1: The Monolithic Foundation (In Progress)
-- [x] Implemented Clean Architecture (Domain, Application, Infrastructure, API).
-- [ ] Built core CRUD REST APIs for Products, Customers, and Orders.
-- [ ] Integrated Entity Framework Core with SQL Server.
-- [ ] Added Pagination, Filtering, and Sorting for catalog endpoints.
-
-### Phase 2: Production Readiness (Planned)
-- [ ] Centralized Exception Handling via Global Middleware.
-- [ ] Integrated Serilog for structured logging.
-- [ ] Added FluentValidation for robust request validation.
-- [ ] Achieved 80% code coverage using xUnit and Moq.
-
-### Phase 3: Performance & Background Processing (Planned)
-- [ ] Optimized SQL queries (Index tuning, resolving N+1 issues).
-- [ ] Implemented Hangfire for scheduled background tasks (Daily sales reports).
-- [ ] Added Outbox Pattern for reliable database operations.
-
-### Phase 4: Distributed System Integration (Planned)
-- [ ] Introduced Redis for caching product catalogs and reducing database load.
-- [ ] Integrated RabbitMQ for asynchronous event processing (e.g., `OrderPlacedEvent`).
-- [ ] Split Email and Notification logic into separate worker services consuming messages.
-
-### Phase 5: Cloud & Containerization (Planned)
-- [ ] Containerized API, SQL Server, Redis, and RabbitMQ via `docker-compose`.
-- [ ] Set up CI/CD pipelines using GitHub Actions.
-- [ ] Deployed infrastructure to Microsoft Azure (App Service, Azure SQL, Service Bus).
+* Clean Architecture
+* Dependency Injection
+* DTO-based API Contracts
+* RESTful APIs
+* Entity Framework Core
+* SQL Server
 
 ---
 
-## Getting Started (Local Development)
+# Current Tech Stack
 
-### Prerequisites
-* Visual Studio 2026
+| Category          | Technology            |
+| ----------------- | --------------------- |
+| Runtime           | .NET 10               |
+| Framework         | ASP.NET Core Web API  |
+| Language          | C#                    |
+| Architecture      | Clean Architecture    |
+| ORM               | Entity Framework Core |
+| Database          | SQL Server            |
+| API Documentation | OpenAPI / Swagger     |
+
+> Technologies like Redis, RabbitMQ, CQRS, Hangfire, Docker, and Azure will be introduced in later phases as the architecture evolves.
+
+---
+
+# Solution Structure
+
+```text
+ScaleStore
+
+├── ScaleStore.Api
+│   ├── Controllers
+│   ├── Middleware
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── ScaleStore.Application
+│   ├── DTOs
+│   ├── Services
+│   ├── Interfaces
+│   └── Validators
+│
+├── ScaleStore.Core
+│   ├── Entities
+│   ├── Interfaces
+│   ├── ValueObjects
+│   └── DomainEvents
+│
+└── ScaleStore.Infrastructure
+    ├── Data
+    ├── Repositories
+    ├── Migrations
+    └── Persistence
+```
+
+---
+
+# Development Roadmap
+
+## ✅ Phase 1 — Monolithic Foundation *(Current)*
+
+### Architecture
+
+* [x] Solution Structure
+* [x] Clean Architecture
+* [x] Dependency Injection
+* [x] Entity Framework Core
+* [x] SQL Server Integration
+* [x] OpenAPI / Swagger
+
+### Product Module
+
+* [x] GET Products
+* [x] POST Products
+* [ ] GET Product by Id
+* [ ] UPDATE Product
+* [ ] DELETE Product
+
+### Customer Module
+
+* [ ] CRUD APIs
+
+### Order Module
+
+* [ ] CRUD APIs
+
+### API Features
+
+* [ ] Pagination
+* [ ] Filtering
+* [ ] Sorting
+* [ ] Search
+* [ ] DTO Mapping
+
+---
+
+## ⏳ Phase 2 — Production Readiness
+
+### Validation
+
+* [ ] FluentValidation
+
+### Logging
+
+* [ ] Serilog
+* [ ] Structured Logging
+
+### Error Handling
+
+* [ ] Global Exception Middleware
+* [ ] Problem Details Responses
+
+### Testing
+
+* [ ] xUnit
+* [ ] Moq
+* [ ] Integration Tests
+* [ ] TestContainers
+* [ ] 80%+ Code Coverage
+
+---
+
+## ⏳ Phase 3 — Business Complexity
+
+As business logic grows, CRUD alone becomes difficult to maintain.
+
+New architectural patterns will be introduced.
+
+### Architecture
+
+* [ ] Repository Pattern (where appropriate)
+* [ ] Unit of Work
+* [ ] CQRS (MediatR)
+* [ ] Domain Events
+
+### Business Features
+
+* [ ] Inventory Management
+* [ ] Product Categories
+* [ ] Discount Engine
+* [ ] Order Processing Workflow
+
+---
+
+## ⏳ Phase 4 — Performance & Scalability
+
+### Performance
+
+* [ ] SQL Query Optimization
+* [ ] Index Tuning
+* [ ] Eliminate N+1 Queries
+
+### Caching
+
+* [ ] Redis
+* [ ] Distributed Cache
+* [ ] Cache Invalidation Strategy
+
+### Background Processing
+
+* [ ] Hangfire
+* [ ] Daily Reports
+* [ ] Scheduled Cleanup Jobs
+
+### Reliability
+
+* [ ] Outbox Pattern
+
+---
+
+## ⏳ Phase 5 — Event-Driven Architecture
+
+The application begins transitioning toward distributed services.
+
+### Messaging
+
+* [ ] RabbitMQ
+* [ ] Publish Domain Events
+* [ ] Consume Events
+
+### Worker Services
+
+* [ ] Email Worker
+* [ ] Notification Worker
+* [ ] Inventory Worker
+
+Example flow:
+
+```text
+Order Created
+
+        │
+
+        ▼
+
+    RabbitMQ
+
+        │
+
+ ┌──────┼─────────┐
+
+ ▼      ▼         ▼
+
+Email  Inventory  Notifications
+```
+
+---
+
+## ⏳ Phase 6 — Cloud & DevOps
+
+### Containers
+
+* [ ] Docker
+* [ ] Docker Compose
+
+### CI/CD
+
+* [ ] GitHub Actions
+* [ ] Automated Tests
+* [ ] Automated Deployment
+
+### Azure
+
+* [ ] Azure App Service
+* [ ] Azure SQL
+* [ ] Azure Cache for Redis
+* [ ] Azure Service Bus
+
+---
+
+# Planned Architecture Evolution
+
+```text
+Phase 1
+
+Controller
+    │
+Service
+    │
+EF Core
+    │
+SQL Server
+
+
+    ↓
+
+Phase 2
+
+Controller
+    │
+Service
+    │
+Validation
+    │
+Logging
+    │
+Repository
+    │
+SQL Server
+
+
+    ↓
+
+Phase 3
+
+Controller
+    │
+Mediator
+    │
+Commands / Queries
+    │
+Handlers
+    │
+Repositories
+    │
+SQL Server
+
+
+    ↓
+
+Phase 4
+
+Controller
+    │
+Redis Cache
+    │
+Background Jobs
+    │
+SQL Server
+
+
+    ↓
+
+Phase 5
+
+    API Gateway
+
+        │
+
+ ┌──────┼──────────┐
+
+ ▼      ▼          ▼
+
+Catalog Orders Customers
+
+        │
+
+    RabbitMQ
+
+        │
+
+Email Inventory Notifications
+
+        │
+
+      Redis
+
+        │
+
+    SQL Server
+```
+
+---
+
+# Getting Started
+
+## Prerequisites
+
 * .NET 10 SDK
-* Docker Desktop (for running infrastructure dependencies)
+* SQL Server
+* Visual Studio 2026 (or VS Code)
+* Docker Desktop *(for later phases)*
 
-### Running the Application
-1. Clone the repository.
-2. Navigate to the solution directory.
-3. Run `docker-compose up -d` to spin up SQL Server, Redis, and RabbitMQ.
-4. Update connection strings in `appsettings.Development.json`.
-5. Run the `ScaleStore.Api` project.
-6. Navigate to `https://localhost:<port>/swagger` to view the API documentation.
+---
 
-## License
+## Running the Project
 
-This project is licensed under the [MIT License](LICENSE).
+Clone the repository:
+
+```bash
+git clone https://github.com/the-sauravkumar/ScaleStore.git
+```
+
+Navigate to the solution:
+
+```bash
+cd ScaleStore
+```
+
+Apply database migrations:
+
+```bash
+dotnet ef database update
+```
+
+Run the API:
+
+```bash
+dotnet run --project ScaleStore.Api
+```
+
+Open Swagger:
+
+```text
+https://localhost:<port>/swagger
+```
+
+---
+
+# Learning Objectives
+
+This project explores:
+
+* Clean Architecture
+* SOLID Principles
+* REST API Design
+* DTOs & API Contracts
+* Entity Framework Core
+* Validation
+* Logging
+* Testing
+* CQRS
+* Repository Pattern
+* Redis
+* RabbitMQ
+* Background Workers
+* Docker
+* Azure
+* CI/CD
+
+---
+
+# Why This Project?
+
+Instead of showcasing a finished architecture, **ScaleStore documents the engineering journey**.
+
+Each phase introduces new technologies only after they solve a real architectural problem, mirroring how production systems typically evolve over time.
+
+---
+
+# License
+
+Licensed under the **[MIT License](LICENSE)**.
