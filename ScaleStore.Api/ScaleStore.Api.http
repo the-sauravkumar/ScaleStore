@@ -1,6 +1,6 @@
-@ScaleStore.Api_HostAddress = http://localhost:5045
+@host = http://localhost:5045
 
-GET {{ScaleStore.Api_HostAddress}}/weatherforecast/
+# Get All Products
+
+GET {{host}}/api/Products/GetAllProducts
 Accept: application/json
-
-###

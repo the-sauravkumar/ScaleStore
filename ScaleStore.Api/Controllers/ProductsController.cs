@@ -19,7 +19,7 @@ namespace ScaleStore.Api.Controllers
         }
 
         [HttpGet("GetAllProducts")]
-        public async Task<IActionResult> GetProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = await _context.Products.ToListAsync();
 
@@ -42,9 +42,9 @@ namespace ScaleStore.Api.Controllers
         }
 
         [HttpPost("CreateProduct")]
-        public async Task<IActionResult> CreateProduct(CreateProductDto ProductDto)
+        public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
-            var product = ProductDto.ToEntity();
+            var product = dto.ToEntity();
 
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
