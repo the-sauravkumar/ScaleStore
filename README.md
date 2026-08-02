@@ -113,9 +113,9 @@ ScaleStore
 
 * [x] GET Products
 * [x] POST Products
-* [ ] GET Product by Id
-* [ ] UPDATE Product
-* [ ] DELETE Product
+* [x] GET Product by Id
+* [x] UPDATE Product
+* [x] DELETE Product
 
 ### Customer Module
 

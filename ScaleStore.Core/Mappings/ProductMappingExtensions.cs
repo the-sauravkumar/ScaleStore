@@ -39,5 +39,13 @@ namespace ScaleStore.Core.Mappings
                 Name = entity.Name
             };
         }
+
+        public static void UpdateFromDto(this Product product, UpdateProductDto dto)
+        {
+            product.Name = dto.Name;
+            product.Sku = dto.Sku;
+            product.Price = dto.Price;
+            product.StockQuantity = dto.StockQuantity;
+        }
     }
 }

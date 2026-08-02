@@ -18,7 +18,7 @@ namespace ScaleStore.Api.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetProducts()
         {
             var products = await _context.Products.ToListAsync();
@@ -30,8 +30,19 @@ namespace ScaleStore.Api.Controllers
             return Ok(response);
         }
 
-        [HttpPost]
-        public async Task CreateProduct(CreateProductDto ProductDto)
+        [HttpGet("GetProduct/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+                return NotFound($"Product with ID {id} not found.");
+
+            return Ok(product.ToResponseDto());
+        }
+
+        [HttpPost("CreateProduct")]
+        public async Task<IActionResult> CreateProduct(CreateProductDto ProductDto)
         {
             var product = ProductDto.ToEntity();
 
@@ -40,7 +51,38 @@ namespace ScaleStore.Api.Controllers
 
             var response = product.ToResponseDto();
 
-            return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, response);
+            return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, response);
+        }
+
+        [HttpPut("UpdateProduct/{id}")]
+        public async Task<IActionResult> UpdateProduct(int id, UpdateProductDto dto)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+                return NotFound($"Product with ID {id} not found.");
+
+            product.UpdateFromDto(dto);
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        [HttpDelete("DeleteProduct/{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+                return NotFound($"Product with ID {id} not found.");
+
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+
+
         }
     }
 }
