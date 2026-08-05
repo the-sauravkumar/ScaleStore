@@ -6,6 +6,7 @@ namespace ScaleStore.Core.Mappings
 {
     public static class ProductMappingExtensions
     {
+        // For POST request DTO
         public static Product ToEntity (this CreateProductDto dto)
         {
             return new Product

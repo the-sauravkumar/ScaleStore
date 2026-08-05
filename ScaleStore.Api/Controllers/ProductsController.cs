@@ -18,6 +18,9 @@ namespace ScaleStore.Api.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Get list of all products
+        /// </summary>
         [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetAllProducts()
         {
@@ -30,6 +33,9 @@ namespace ScaleStore.Api.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Get a product by its ID
+        /// </summary>
         [HttpGet("GetProduct/{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
@@ -40,7 +46,9 @@ namespace ScaleStore.Api.Controllers
 
             return Ok(product.ToResponseDto());
         }
-
+        /// <summary>
+        /// Create a new product
+        /// </summary>
         [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
@@ -54,6 +62,9 @@ namespace ScaleStore.Api.Controllers
             return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, response);
         }
 
+        /// <summary>
+        /// Update an existing product by its ID
+        /// </summary>
         [HttpPut("UpdateProduct/{id}")]
         public async Task<IActionResult> UpdateProduct(int id, UpdateProductDto dto)
         {
@@ -69,6 +80,9 @@ namespace ScaleStore.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Delete a product by its ID
+        /// </summary>
         [HttpDelete("DeleteProduct/{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
