@@ -79,10 +79,10 @@ namespace ScaleStore.Api.Controllers
         }
 
         /// <summary>
-        /// Delete a product by its ID
+        /// Delete an order by its ID
         /// </summary>
         [HttpDelete("DeleteOrder/{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
             var order = await _context.Orders.FindAsync(id);
             if (order == null)
