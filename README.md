@@ -119,11 +119,11 @@ ScaleStore
 
 ### Customer Module
 
-* [ ] CRUD APIs
+* [x] CRUD APIs
 
 ### Order Module
 
-* [ ] CRUD APIs
+* [x] CRUD APIs
 
 ### API Features
 
