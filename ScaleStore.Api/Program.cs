@@ -1,5 +1,7 @@
 using ScaleStore.Infrastructure.Data;
+using ScaleStore.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using ScaleStore.Core.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,8 @@ builder.Services.AddSwaggerGen( c =>
 
 builder.Services.AddDbContext<ScaleStoreDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
