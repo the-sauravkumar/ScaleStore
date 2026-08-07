@@ -10,7 +10,7 @@ namespace ScaleStore.Core.Interfaces
         Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync();
         
         // Promises to return a single product (nullable)
-        Task<ProductResponseDto?> GetProductById(int id);
+        Task<ProductResponseDto?> GetProductByIdAsync(int id);
         Task <ProductCreatedResponseDto> CreateProductAsync(CreateProductDto dto);
 
         // Promises to return true if update succeeded, false if not found
