@@ -1,9 +1,6 @@
-﻿using ScaleStore.Core.Entities;
-using ScaleStore.Core.DTOs.Order;
-using ScaleStore.Core.Mappings;
-using ScaleStore.Infrastructure.Data;
+﻿using ScaleStore.Core.DTOs.Order;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ScaleStore.Core.Interfaces;
 
 namespace ScaleStore.Api.Controllers
 {
@@ -11,11 +8,11 @@ namespace ScaleStore.Api.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly ScaleStoreDbContext _context;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(ScaleStoreDbContext context)
+        public OrdersController(IOrderService orderService)
         {
-            _context = context;
+            _orderService = orderService;
         }
 
         /// <summary>
@@ -25,12 +22,9 @@ namespace ScaleStore.Api.Controllers
         [HttpGet("GetAllOrders")]
         public async Task<IActionResult> GetAllOrders()
         {
-            var orders = await _context.Orders.ToListAsync();
-            var response = orders
-                .Select(o => o.ToResponseDto())
-                .ToList();
+            var orders = await _orderService.GetAllOrdersAsync();
 
-            return Ok(response);
+            return Ok(orders);
         }
 
         /// <summary>
@@ -39,12 +33,12 @@ namespace ScaleStore.Api.Controllers
         [HttpGet("GetOrder/{id}")]
         public async Task<IActionResult> GetOrderById(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _orderService.GetOrderByIdAsync(id);
 
             if(order == null)
                 return NotFound($"Order with ID {id} not found.");
 
-            return Ok(order.ToResponseDto());
+            return Ok(order);
         }
 
         /// <summary>
@@ -53,14 +47,8 @@ namespace ScaleStore.Api.Controllers
         [HttpPost("CreateOrder")]
         public async Task<IActionResult> CreateOrder(CreateOrderDto dto)
         {
-            var order = dto.ToEntity();
-            _context.Orders.Add(order);
-
-            await _context.SaveChangesAsync();
-
-            var response = order.ToResponseDto();
-
-            return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, response);
+            var order = await _orderService.CreateOrderAsync(dto);
+            return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
         }
 
         /// <summary>
@@ -69,12 +57,11 @@ namespace ScaleStore.Api.Controllers
         [HttpPut("UpdateOrder/{id}")]
         public async Task<IActionResult> UpdateOrder(int id, UpdateOrderDto dto)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _orderService.UpdateOrderAsync(id, dto);
 
-            if(order == null)
+            if(order == false)
                 return NotFound($"Order with ID {id} not found.");
 
-            await _context.SaveChangesAsync();
             return NoContent();
         }
 
@@ -84,12 +71,10 @@ namespace ScaleStore.Api.Controllers
         [HttpDelete("DeleteOrder/{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-                return NotFound($"Order with ID {id} not found.");
+            var order = await _orderService.DeleteOrderAsync(id);
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
+            if (order == false)
+                return NotFound($"Order with ID {id} not found.");
 
             return NoContent();
         }

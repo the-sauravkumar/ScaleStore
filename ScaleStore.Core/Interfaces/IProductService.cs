@@ -1,6 +1,4 @@
-﻿using ScaleStore.Core.DTOs;
-using ScaleStore.Core.DTOs.Product;
-using System.Threading.Tasks;
+﻿using ScaleStore.Core.DTOs.Product;
 
 namespace ScaleStore.Core.Interfaces
 {
