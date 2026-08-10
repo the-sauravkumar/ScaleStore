@@ -28,22 +28,19 @@ The goal is to understand not only **how** enterprise technologies work, but **w
 
 # Current Architecture
 
-```text
-Client
-    │
-HTTP REST
-    │
-Controllers
-    │
-Request DTOs
-    │
-Application Services
-    │
-Entity Framework Core
-    │
-SQL Server
-    │
-Response DTOs
+```mermaid
+graph TD
+    Client((Client)) -->|HTTP REST| Controllers[Controllers]
+    Controllers -->|Request DTOs| Services[Application Services]
+    Services --> EF[Entity Framework Core]
+    EF --> SQL[(SQL Server)]
+    
+    SQL -.->|Response DTOs| Controllers
+    
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef database fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    class SQL database;
+
 ```
 
 Current design principles:
@@ -59,15 +56,15 @@ Current design principles:
 
 # Current Tech Stack
 
-| Category          | Technology            |
-| ----------------- | --------------------- |
-| Runtime           | .NET 10               |
-| Framework         | ASP.NET Core Web API  |
-| Language          | C#                    |
-| Architecture      | Clean Architecture    |
-| ORM               | Entity Framework Core |
-| Database          | SQL Server            |
-| API Documentation | OpenAPI / Swagger     |
+| Category | Technology |
+| --- | --- |
+| Runtime | .NET 10 |
+| Framework | ASP.NET Core Web API |
+| Language | C# |
+| Architecture | Clean Architecture |
+| ORM | Entity Framework Core |
+| Database | SQL Server |
+| API Documentation | OpenAPI / Swagger |
 
 > Technologies like Redis, RabbitMQ, CQRS, Hangfire, Docker, and Azure will be introduced in later phases as the architecture evolves.
 
@@ -77,21 +74,39 @@ Current design principles:
 
 ```text
 ScaleStore
-
 ├── ScaleStore.Api
-│   ├── Controllers
+│   ├── Connected Services
+│   ├── Dependencies
 │   ├── Properties
+│   ├── Controllers
+│   │   ├── CustomersController.cs
+│   │   ├── OrdersController.cs
+│   │   └── ProductsController.cs
+│   ├── appsettings.json
 │   ├── Program.cs
-│   └── appsettings.json
+│   └── ScaleStore.Api.http
 │
 ├── ScaleStore.Core
+│   ├── Dependencies
 │   ├── DTOs
+│   │   ├── Customer
+│   │   ├── Order
+│   │   └── Product
 │   ├── Entities
+│   ├── Interfaces
+│   │   ├── IOrderService.cs
+│   │   └── IProductService.cs
 │   └── Mappings
 │
 └── ScaleStore.Infrastructure
+    ├── Dependencies
     ├── Data
-    └── Migrations
+    │   └── ScaleStoreDbContext.cs
+    ├── Migrations
+    └── Services
+        ├── OrderService.cs
+        └── ProductService.cs
+
 ```
 
 ---
@@ -117,13 +132,15 @@ ScaleStore
 * [x] UPDATE Product
 * [x] DELETE Product
 
-### Customer Module
-
-* [x] CRUD APIs
-
 ### Order Module
 
 * [x] CRUD APIs
+* [x] Service Layer Abstraction
+
+### Customer Module
+
+* [ ] CRUD APIs
+* [ ] Service Layer Abstraction *(WIP)*
 
 ### API Features
 
@@ -227,22 +244,16 @@ The application begins transitioning toward distributed services.
 
 Example flow:
 
-```text
-Order Created
+```mermaid
+graph TD
+    Trigger((Order Created)) --> MQ{RabbitMQ}
+    MQ --> Worker1[Email Worker]
+    MQ --> Worker2[Inventory Worker]
+    MQ --> Worker3[Notification Worker]
+    
+    classDef queue fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    class MQ queue;
 
-        │
-
-        ▼
-
-    RabbitMQ
-
-        │
-
- ┌──────┼─────────┐
-
- ▼      ▼         ▼
-
-Email  Inventory  Notifications
 ```
 
 ---
@@ -271,94 +282,69 @@ Email  Inventory  Notifications
 
 # Planned Architecture Evolution
 
-```text
-Phase 1
+```mermaid
+graph TD
+    subgraph Phase 1: Clean Monolith
+        C1[Controller] --> S1[Service Layer]
+        S1 --> EF1[EF Core]
+        EF1 --> DB1[(SQL Server)]
+    end
 
-Controller
-    │
-Service
-    │
-EF Core
-    │
-SQL Server
+```
 
+```mermaid
+graph TD
+    subgraph Phase 2: Production Ready
+        C2[Controller] --> V2{Validation}
+        V2 --> S2[Service Layer]
+        S2 --> EF2[EF Core]
+        EF2 --> DB2[(SQL Server)]
+        
+        L2[Serilog] -.-> C2
+        L2 -.-> S2
+    end
 
-    ↓
+```
 
-Phase 2
+```mermaid
+graph TD
+    subgraph Phase 3: CQRS & Patterns
+        C3[Controller] --> M3{MediatR}
+        M3 --> Q3[Queries]
+        M3 --> Cmd3[Commands]
+        Q3 --> Repo3[Repositories]
+        Cmd3 --> Repo3
+        Repo3 --> DB3[(SQL Server)]
+    end
 
-Controller
-    │
-Service
-    │
-Validation
-    │
-Logging
-    │
-Repository
-    │
-SQL Server
+```
 
+```mermaid
+graph TD
+    subgraph Phase 4: Performance
+        C4[Controller] --> Cache4[(Redis Cache)]
+        C4 --> M4{MediatR}
+        M4 --> DB4[(SQL Server)]
+        Job4[Background Jobs] --> DB4
+    end
 
-    ↓
+```
 
-Phase 3
+```mermaid
+graph TD
+    subgraph Phase 5: Event-Driven
+        GW[API Gateway] --> Cat[Catalog Service]
+        GW --> Ord[Orders Service]
+        GW --> Cust[Customers Service]
+        
+        Ord --> MQ{RabbitMQ}
+        MQ --> W1[Email Worker]
+        MQ --> W2[Inventory Worker]
+        
+        Cat --> Cache5[(Redis)]
+        Ord --> DB5[(SQL Server)]
+    end
 
-Controller
-    │
-Mediator
-    │
-Commands / Queries
-    │
-Handlers
-    │
-Repositories
-    │
-SQL Server
-
-
-    ↓
-
-Phase 4
-
-Controller
-    │
-Redis Cache
-    │
-Background Jobs
-    │
-SQL Server
-
-
-    ↓
-
-Phase 5
-
-    API Gateway
-
-        │
-
- ┌──────┼──────────┐
-
- ▼      ▼          ▼
-
-Catalog Orders Customers
-
-        │
-
-    RabbitMQ
-
-        │
-
-Email Inventory Notifications
-
-        │
-
-      Redis
-
-        │
-
-    SQL Server
 ```
 
 ---
@@ -379,31 +365,36 @@ Email Inventory Notifications
 Clone the repository:
 
 ```bash
-git clone https://github.com/the-sauravkumar/ScaleStore.git
+git clone [https://github.com/the-sauravkumar/ScaleStore.git](https://github.com/the-sauravkumar/ScaleStore.git)
+
 ```
 
 Navigate to the solution:
 
 ```bash
 cd ScaleStore
+
 ```
 
 Apply database migrations:
 
 ```bash
 dotnet ef database update
+
 ```
 
 Run the API:
 
 ```bash
 dotnet run --project ScaleStore.Api
+
 ```
 
 Open Swagger:
 
 ```text
 https://localhost:<port>/swagger
+
 ```
 
 ---
