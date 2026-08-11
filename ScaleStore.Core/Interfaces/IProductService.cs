@@ -5,7 +5,7 @@ namespace ScaleStore.Core.Interfaces
     public interface IProductService
     {
         // Promises to return a list of product
-        Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync();
+        Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync(ProductQueryParameters queryParams);
         
         // Promises to return a single product (nullable)
         Task<ProductResponseDto?> GetProductByIdAsync(int id);

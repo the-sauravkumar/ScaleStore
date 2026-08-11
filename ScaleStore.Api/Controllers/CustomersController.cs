@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ScaleStore.Api.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
