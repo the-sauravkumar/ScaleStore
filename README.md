@@ -146,11 +146,11 @@ ScaleStore
 
 ### API Features
 
+* [x] DTO Mapping
 * [ ] Pagination
 * [ ] Filtering
 * [ ] Sorting
 * [ ] Search
-* [ ] DTO Mapping
 
 ---
 
