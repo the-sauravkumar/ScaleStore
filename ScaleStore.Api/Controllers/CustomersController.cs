@@ -1,20 +1,16 @@
-﻿using ScaleStore.Core.Entities;
+﻿using ScaleStore.Core.Interfaces;
 using ScaleStore.Core.DTOs.Customer;
-using ScaleStore.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using ScaleStore.Core.Mappings;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace ScaleStore.Api.Controllers
 {
     public class CustomersController : ControllerBase
     {
-        private readonly ScaleStoreDbContext _context;
+        private readonly ICustomerService _customerService;
 
-        public CustomersController(ScaleStoreDbContext context)
+        public CustomersController(ICustomerService customerService)
         {
-            _context = context;
+            _customerService = customerService;
         }
 
         /// <summary>
@@ -23,13 +19,8 @@ namespace ScaleStore.Api.Controllers
         [HttpGet("GetAllCustomers")]
         public async Task<IActionResult> GetAllCustomers()
         {
-            var customers = await _context.Customers.ToListAsync();
-
-            var response = customers
-                .Select(c => c.ToResponseDto())
-                .ToList();
-
-            return Ok(response);
+            var customers = await _customerService.GetAllCustomersAsync();
+            return Ok(customers);
         }
 
         /// <summary>
@@ -38,12 +29,12 @@ namespace ScaleStore.Api.Controllers
         [HttpGet("GetCustomer/{id}")]
         public async Task<IActionResult> GetCustomerById(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerService.GetCustomerByIdAsync(id);
 
             if (customer == null)
                 return NotFound($"Customer with ID {id} not found.");
 
-            return Ok(customer.ToResponseDto());
+            return Ok(customer);
         }
 
         /// <summary>
@@ -52,14 +43,9 @@ namespace ScaleStore.Api.Controllers
         [HttpPost("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer(CreateCustomerDto dto)
         {
-            var customer = dto.ToEntity();
+            var customer = await _customerService.CreateCustomerAsync(dto);
 
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
-
-            var response = customer.ToResponseDto();
-
-            return CreatedAtAction(nameof(GetCustomerById), new { id = customer.Id }, response);
+            return CreatedAtAction(nameof(GetCustomerById), new { id = customer.Id }, customer);
         }
 
         /// <summary>
@@ -68,14 +54,10 @@ namespace ScaleStore.Api.Controllers
         [HttpPut("UpdateCustomer/{id}")]
         public async Task<IActionResult> UpdateCustomer(int id, UpdateCustomerDto dto)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerService.UpdateCustomerAsync(id, dto);
 
-            if (customer == null)
+            if (!customer)
                 return NotFound($"Customer with ID {id} not found.");
-
-            customer.UpdateFromDto(dto);
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -86,13 +68,10 @@ namespace ScaleStore.Api.Controllers
         [HttpDelete("DeleteCustomer/{id}")]
         public async Task<IActionResult> DeleteCustomer(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _customerService.DeleteCustomerAsync(id);
 
-            if (customer == null)
+            if (!customer)
                 return NotFound($"Customer with ID {id} not found.");
-
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }

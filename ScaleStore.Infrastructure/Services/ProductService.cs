@@ -1,5 +1,4 @@
 ﻿using ScaleStore.Core.Interfaces;
-using ScaleStore.Core.Entities;
 using ScaleStore.Core.Mappings;
 using ScaleStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

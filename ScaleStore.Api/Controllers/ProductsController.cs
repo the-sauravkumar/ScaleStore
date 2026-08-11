@@ -33,6 +33,10 @@ namespace ScaleStore.Api.Controllers
         public async Task<IActionResult> GetProductById(int id)
         {
             var product = await _productService.GetProductByIdAsync(id);
+
+            if (product == null)
+                return NotFound($"Product with ID {id} not found.");
+
             return Ok(product);
         }
         /// <summary>
