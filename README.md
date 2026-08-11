@@ -139,8 +139,8 @@ ScaleStore
 
 ### Customer Module
 
-* [ ] CRUD APIs
-* [ ] Service Layer Abstraction *(WIP)*
+* [x] CRUD APIs
+* [x] Service Layer Abstraction *(WIP)*
 
 ### API Features
 
