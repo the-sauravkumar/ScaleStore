@@ -94,6 +94,7 @@ ScaleStore
 │   │   └── Product
 │   ├── Entities
 │   ├── Interfaces
+│   │   ├── ICustomerService.cs
 │   │   ├── IOrderService.cs
 │   │   └── IProductService.cs
 │   └── Mappings
@@ -104,6 +105,7 @@ ScaleStore
     │   └── ScaleStoreDbContext.cs
     ├── Migrations
     └── Services
+        ├── CustomerService.cs
         ├── OrderService.cs
         └── ProductService.cs
 
