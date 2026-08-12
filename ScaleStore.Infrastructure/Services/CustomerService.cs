@@ -16,9 +16,34 @@ namespace ScaleStore.Infrastructure.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<CustomerResponseDto>> GetAllCustomersAsync()
+        public async Task<IEnumerable<CustomerResponseDto>> GetAllCustomersAsync(CustomerQueryParameters queryParams)
         {
-            var customers = await _context.Customers.ToListAsync();
+            var query = _context.Customers.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryParams.SearchTerm))
+            {
+                query = query.Where(c => c.FirstName.Contains(queryParams.SearchTerm) ||
+                                        c.LastName.Contains(queryParams.SearchTerm) ||
+                                         c.Email.Contains(queryParams.SearchTerm));
+            }
+
+            query = queryParams.SortBy?.ToLower() switch
+            {
+                "first_name" => query.OrderBy(c => c.FirstName),
+                "last_name" => query.OrderBy(c => c.LastName),
+                "email_desc" => query.OrderByDescending(c => c.Email),
+                "email_asc" => query.OrderBy(c => c.Email),
+                _ => query.OrderBy(c => c.Id),
+            };
+
+            var skipAmount = (queryParams.PageNumber - 1) * queryParams.PageSize;
+
+
+            var customers = await query
+                .Skip(skipAmount)
+                .Take(queryParams.PageSize)
+                .ToListAsync();
+
             return customers.Select (c => c.ToResponseDto());
         }
 

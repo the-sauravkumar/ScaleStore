@@ -4,7 +4,7 @@ namespace ScaleStore.Core.Interfaces
 {
     public interface ICustomerService
     {
-        Task<IEnumerable<CustomerResponseDto>> GetAllCustomersAsync();
+        Task<IEnumerable<CustomerResponseDto>> GetAllCustomersAsync(CustomerQueryParameters query);
         Task<CustomerResponseDto?> GetCustomerByIdAsync(int id);
         Task<CustomerCreatedResponseDto> CreateCustomerAsync(CreateCustomerDto dto);
         Task<bool> UpdateCustomerAsync(int id, UpdateCustomerDto dto);

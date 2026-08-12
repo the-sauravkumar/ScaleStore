@@ -19,9 +19,9 @@ namespace ScaleStore.Api.Controllers
         /// Get list of all customers
         /// </summary>
         [HttpGet("GetAllCustomers")]
-        public async Task<IActionResult> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers([FromQuery] CustomerQueryParameters queryParams)
         {
-            var customers = await _customerService.GetAllCustomersAsync();
+            var customers = await _customerService.GetAllCustomersAsync(queryParams);
             return Ok(customers);
         }
 
