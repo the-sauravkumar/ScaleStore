@@ -22,9 +22,39 @@ namespace ScaleStore.Infrastructure.Services
             return order?.ToResponseDto();
         }
 
-        public async Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync()
+        public async Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync(OrderQueryParameters queryParameters)
         {
-            var orders = await _context.Orders.ToListAsync();
+            var query = _context.Orders.AsQueryable();
+
+            if (queryParameters.CustomerId.HasValue)
+            {
+                query = query.Where(o => o.CustomerId == queryParameters.CustomerId.Value);
+            }
+
+           if (queryParameters.MinAmount.HasValue)
+            {
+                query = query.Where(o => o.TotalAmount >= queryParameters.MinAmount.Value);
+            }
+
+           if (queryParameters.MaxAmount.HasValue)
+            {
+                query = query.Where(o => o.TotalAmount <= queryParameters.MaxAmount.Value);
+            }
+
+            query = queryParameters.SortBy?.ToLower() switch
+            {
+                "date_asc" => query.OrderBy(o => o.OrderDate),
+                "date_desc" => query.OrderByDescending(o => o.OrderDate),
+                _ => query.OrderBy(o => o.Id)
+            };
+
+            var skipAmount = (queryParameters.PageNumber - 1) * queryParameters.PageSize;
+
+            var orders = await query
+                .Skip(skipAmount)
+                .Take(queryParameters.PageSize)
+                .ToListAsync();
+
             return orders.Select(o => o.ToResponseDto());
         }
 

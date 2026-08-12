@@ -20,9 +20,9 @@ namespace ScaleStore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllOrders")]
-        public async Task<IActionResult> GetAllOrders()
+        public async Task<IActionResult> GetAllOrders([FromQuery] OrderQueryParameters queryParameters)
         {
-            var orders = await _orderService.GetAllOrdersAsync();
+            var orders = await _orderService.GetAllOrdersAsync(queryParameters);
 
             return Ok(orders);
         }
