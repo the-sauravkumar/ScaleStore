@@ -142,7 +142,7 @@ ScaleStore
 
 ---
 
-## ⏳ Phase 2 — Production Readiness
+## ⏳ Phase 2 — Production Readiness (_Current_)
 
 ### Validation
 
