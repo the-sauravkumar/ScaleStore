@@ -115,7 +115,7 @@ ScaleStore
 
 # Development Roadmap
 
-## ✅ Phase 1 — Monolithic Foundation *(Current)*
+## ✅ Phase 1 — Monolithic Foundation
 
 ### Architecture
 
@@ -147,10 +147,10 @@ ScaleStore
 ### API Features
 
 * [x] DTO Mapping
-* [ ] Pagination
-* [ ] Filtering
-* [ ] Sorting
-* [ ] Search
+* [x] Pagination
+* [x] Filtering
+* [x] Sorting
+* [x] Search
 
 ---
 
