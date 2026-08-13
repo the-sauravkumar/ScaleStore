@@ -79,9 +79,7 @@ ScaleStore
 │   ├── Dependencies
 │   ├── Properties
 │   ├── Controllers
-│   │   ├── CustomersController.cs
-│   │   ├── OrdersController.cs
-│   │   └── ProductsController.cs
+│   ├── Middleware
 │   ├── appsettings.json
 │   ├── Program.cs
 │   └── ScaleStore.Api.http
@@ -89,25 +87,15 @@ ScaleStore
 ├── ScaleStore.Core
 │   ├── Dependencies
 │   ├── DTOs
-│   │   ├── Customer
-│   │   ├── Order
-│   │   └── Product
 │   ├── Entities
 │   ├── Interfaces
-│   │   ├── ICustomerService.cs
-│   │   ├── IOrderService.cs
-│   │   └── IProductService.cs
 │   └── Mappings
 │
 └── ScaleStore.Infrastructure
     ├── Dependencies
     ├── Data
-    │   └── ScaleStoreDbContext.cs
     ├── Migrations
     └── Services
-        ├── CustomerService.cs
-        ├── OrderService.cs
-        └── ProductService.cs
 
 ```
 
@@ -167,8 +155,8 @@ ScaleStore
 
 ### Error Handling
 
-* [ ] Global Exception Middleware
-* [ ] Problem Details Responses
+* [x] Global Exception Middleware
+* [x] Problem Details Responses
 
 ### Testing
 
