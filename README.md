@@ -10,7 +10,7 @@ Most portfolio projects jump straight into microservices, RabbitMQ, Redis, CQRS,
 
 Real software rarely evolves that way.
 
-**ScaleStore** intentionally grows in phases, introducing each architectural pattern only when the previous design reaches its limitations.
+**ScaleStore** intentionally grows in phases, introducing each architectural pattern only when the previous design reaches its limitations. 
 
 The goal is to understand not only **how** enterprise technologies work, but **why** they are introduced.
 
@@ -21,6 +21,7 @@ The goal is to understand not only **how** enterprise technologies work, but **w
 * Build a production-quality ASP.NET Core backend
 * Follow Clean Architecture principles
 * Learn enterprise software design incrementally
+* Understand *why* enterprise patterns exist by artificially stressing the system
 * Demonstrate architectural evolution
 * Deploy a cloud-ready distributed system
 
@@ -37,8 +38,8 @@ graph TD
     
     SQL -.->|Response DTOs| Controllers
     
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef database fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px,color:#000;
+    classDef database fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
     class SQL database;
 
 ```
@@ -142,7 +143,7 @@ ScaleStore
 
 ---
 
-## ⏳ Phase 2 — Production Readiness (_Current_)
+## ⏳ Phase 2 — Production Readiness (*Current*)
 
 ### Validation
 
@@ -190,19 +191,38 @@ New architectural patterns will be introduced.
 
 ---
 
-## ⏳ Phase 4 — Performance & Scalability
+## ⏳ Phase 4 — Performance, Concurrency & Scalability
 
-### Performance
+### Database Performance
 
-* [ ] SQL Query Optimization
-* [ ] Index Tuning
+* [ ] SQL Query Optimization & Execution Plans
+* [ ] Index Tuning & Composite Indexes (Leftmost-prefix rule)
 * [ ] Eliminate N+1 Queries
+* [ ] Connection Pooling
+
+### Concurrency
+
+* [ ] Sequential vs. Concurrent I/O (`Task.WhenAll`)
+* [ ] Bounded Concurrency (`SemaphoreSlim`)
+* [ ] Rate Limiting & Backpressure
+
+### Latency & Observability
+
+* [ ] Structured Metrics (P50, P95, P99)
+* [ ] Distributed Tracing & OpenTelemetry
+* [ ] Correlation IDs
+
+### Resilience
+
+* [ ] Timeouts & CancellationToken
+* [ ] Retry Policies & Exponential Backoff
+* [ ] Circuit Breaker Pattern
 
 ### Caching
 
-* [ ] Redis
-* [ ] Distributed Cache
-* [ ] Cache Invalidation Strategy
+* [ ] Redis & Distributed Cache
+* [ ] Cache-aside Pattern
+* [ ] Cache Invalidation Strategy & TTL
 
 ### Background Processing
 
@@ -210,21 +230,18 @@ New architectural patterns will be introduced.
 * [ ] Daily Reports
 * [ ] Scheduled Cleanup Jobs
 
-### Reliability
-
-* [ ] Outbox Pattern
-
 ---
 
 ## ⏳ Phase 5 — Event-Driven Architecture
 
-The application begins transitioning toward distributed services.
+The application begins transitioning toward distributed services. This is where CAP Theorem concepts (eventual consistency, partition tolerance) are practically applied.
 
 ### Messaging
 
 * [ ] RabbitMQ
 * [ ] Publish Domain Events
 * [ ] Consume Events
+* [ ] Outbox Pattern (Reliability)
 
 ### Worker Services
 
@@ -241,7 +258,7 @@ graph TD
     MQ --> Worker2[Inventory Worker]
     MQ --> Worker3[Notification Worker]
     
-    classDef queue fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef queue fill:#fff3e0,stroke:#e65100,stroke-width:2px,color:#000;
     class MQ queue;
 
 ```
@@ -311,7 +328,7 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph Phase 4: Performance
+    subgraph Phase 4: Performance & Scalability
         C4[Controller] --> Cache4[(Redis Cache)]
         C4 --> M4{MediatR}
         M4 --> DB4[(SQL Server)]
@@ -399,10 +416,10 @@ This project explores:
 * DTOs & API Contracts
 * Entity Framework Core
 * Validation
-* Logging
+* Logging & Observability
 * Testing
 * CQRS
-* Repository Pattern
+* Concurrency & Resilience
 * Redis
 * RabbitMQ
 * Background Workers
@@ -416,7 +433,7 @@ This project explores:
 
 Instead of showcasing a finished architecture, **ScaleStore documents the engineering journey**.
 
-Each phase introduces new technologies only after they solve a real architectural problem, mirroring how production systems typically evolve over time.
+Each phase introduces new technologies only after they solve a real architectural problem, mirroring how production systems typically evolve over time. **We don't just introduce a technology when a problem appears; we introduce the technology because we have experimentally demonstrated the problem under load.**
 
 ---
 
