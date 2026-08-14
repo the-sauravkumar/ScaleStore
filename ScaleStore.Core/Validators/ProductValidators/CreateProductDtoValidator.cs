@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using ScaleStore.Core.DTOs.Product;
 
-namespace ScaleStore.Core.Validators
+namespace ScaleStore.Core.Validators.ProductValidators
 {
     public class CreateProductDtoValidator : AbstractValidator<CreateProductDto>
     {

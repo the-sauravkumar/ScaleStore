@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ScaleStore.Core.Interfaces;
 using FluentValidation;
+using ScaleStore.Core.Validators.ProductValidators;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,8 +34,8 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 
-// Register all validators found in Core assembly
-builder.Services.AddValidatorsFromAssemblyContaining<ScaleStore.Core.Validators.CreateProductDtoValidator>();
+// Register all validators found in Core assembly (even if they are in different namespaces) for dependency injection
+builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
 
 // -- Global Exception Handling Middleware --
 builder.Services.AddExceptionHandler<ScaleStore.Api.Middleware.GlobalExceptionHandler>();

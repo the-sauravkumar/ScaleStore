@@ -1,6 +1,7 @@
 ﻿using ScaleStore.Core.Interfaces;
 using ScaleStore.Core.DTOs.Customer;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace ScaleStore.Api.Controllers
 {
@@ -9,10 +10,18 @@ namespace ScaleStore.Api.Controllers
     public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
+        private readonly IValidator<CreateCustomerDto> _createValidator;
+        private readonly IValidator<UpdateCustomerDto> _updateValidator;
 
-        public CustomersController(ICustomerService customerService)
+        public CustomersController(
+            ICustomerService customerService,
+            IValidator<CreateCustomerDto> createValidator,
+            IValidator<UpdateCustomerDto> updateValidator
+            )
         {
             _customerService = customerService;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         /// <summary>
@@ -45,6 +54,17 @@ namespace ScaleStore.Api.Controllers
         [HttpPost("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer(CreateCustomerDto dto)
         {
+            var validationResult = await _createValidator.ValidateAsync(dto);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.Select(e => new
+                {
+                    Field = e.PropertyName,
+                    Error = e.ErrorMessage
+                }));
+            }
+
             var customer = await _customerService.CreateCustomerAsync(dto);
 
             return CreatedAtAction(nameof(GetCustomerById), new { id = customer.Id }, customer);
@@ -56,10 +76,18 @@ namespace ScaleStore.Api.Controllers
         [HttpPut("UpdateCustomer/{id}")]
         public async Task<IActionResult> UpdateCustomer(int id, UpdateCustomerDto dto)
         {
-            var customer = await _customerService.UpdateCustomerAsync(id, dto);
+            var validationResult = await _updateValidator.ValidateAsync(dto);
 
-            if (!customer)
-                return NotFound($"Customer with ID {id} not found.");
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.Select(e => new
+                {
+                    Field = e.PropertyName,
+                    Error = e.ErrorMessage
+                }));
+            }
+
+            var customer = await _customerService.UpdateCustomerAsync(id, dto);
 
             return NoContent();
         }
