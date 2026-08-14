@@ -2,6 +2,7 @@ using ScaleStore.Infrastructure.Data;
 using ScaleStore.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using ScaleStore.Core.Interfaces;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,9 @@ builder.Services.AddDbContext<ScaleStoreDbContext>(options =>
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+// Register all validators found in Core assembly
+builder.Services.AddValidatorsFromAssemblyContaining<ScaleStore.Core.Validators.CreateProductDtoValidator>();
 
 // -- Global Exception Handling Middleware --
 builder.Services.AddExceptionHandler<ScaleStore.Api.Middleware.GlobalExceptionHandler>();
