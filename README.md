@@ -147,7 +147,7 @@ ScaleStore
 
 ### Validation
 
-* [ ] FluentValidation
+* [x] FluentValidation
 
 ### Logging
 
