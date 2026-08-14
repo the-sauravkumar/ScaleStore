@@ -1,6 +1,7 @@
 using ScaleStore.Infrastructure.Data;
 using ScaleStore.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using ScaleStore.Core.Interfaces;
 using FluentValidation;
 
@@ -9,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// Disable the built-in .NET model validation filter to allow FluentValidation
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddSwaggerGen( c =>
 {
