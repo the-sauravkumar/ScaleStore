@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ScaleStore.Core.Interfaces;
 using FluentValidation;
 using ScaleStore.Core.Validators.ProductValidators;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,6 +37,12 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 // Register all validators found in Core assembly (even if they are in different namespaces) for dependency injection
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
+
+// Disable built-in model validation and enable FluentValidation auto-validation
+builder.Services.AddFluentValidationAutoValidation(options =>
+{
+    options.DisableBuiltInModelValidation = true;
+});
 
 // -- Global Exception Handling Middleware --
 builder.Services.AddExceptionHandler<ScaleStore.Api.Middleware.GlobalExceptionHandler>();

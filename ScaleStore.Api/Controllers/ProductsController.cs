@@ -11,16 +11,10 @@ namespace ScaleStore.Api.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IValidator<CreateProductDto> _createProductValidator;
-        private readonly IValidator<UpdateProductDto> _updateProductValidator;
-        public ProductsController(
-            IProductService productService,
-            IValidator<CreateProductDto> createProductValidator,
-            IValidator<UpdateProductDto> updateProductValidator)
+
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
-            _createProductValidator = createProductValidator;
-            _updateProductValidator = updateProductValidator;
         }
 
         /// <summary>
@@ -53,17 +47,6 @@ namespace ScaleStore.Api.Controllers
         public async Task<IActionResult> CreateProduct(CreateProductDto dto)
         {
 
-            var validationResult = await _createProductValidator.ValidateAsync(dto);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors.Select(e => new
-                {
-                    Field = e.PropertyName,
-                    Error = e.ErrorMessage
-                }));
-            }
-
             var product = await _productService.CreateProductAsync(dto);
 
             return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
@@ -75,17 +58,7 @@ namespace ScaleStore.Api.Controllers
         [HttpPut("UpdateProduct/{id}")]
         public async Task<IActionResult> UpdateProduct(int id, UpdateProductDto dto)
         {
-            var validationResult = await _updateProductValidator.ValidateAsync(dto);
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors.Select(e => new
-                {
-                    Field = e.PropertyName,
-                    Error = e.ErrorMessage
-                }));
-            }
-
-            var result = await _productService.UpdateProductAsync(id, dto);
+            await _productService.UpdateProductAsync(id, dto);
             return NoContent();
         }
 

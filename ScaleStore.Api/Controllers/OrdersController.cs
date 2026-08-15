@@ -10,17 +10,10 @@ namespace ScaleStore.Api.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly IValidator<CreateOrderDto> _createValidator;
-        private readonly IValidator<UpdateOrderDto> _updateValidator;
 
-        public OrdersController(
-            IOrderService orderService,
-            IValidator<CreateOrderDto> createValidator,
-            IValidator<UpdateOrderDto> updateValidator)
+        public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;
-            _createValidator = createValidator;
-            _updateValidator = updateValidator;
         }
 
         /// <summary>
@@ -55,17 +48,6 @@ namespace ScaleStore.Api.Controllers
         [HttpPost("CreateOrder")]
         public async Task<IActionResult> CreateOrder(CreateOrderDto dto)
         {
-            var validationResult = await _createValidator.ValidateAsync(dto);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors.Select(e => new
-                {
-                    Field = e.PropertyName,
-                    Error = e.ErrorMessage
-                }));
-            }
-
             var order = await _orderService.CreateOrderAsync(dto);
             return CreatedAtAction(nameof(GetOrderById), new { id = order.Id }, order);
         }
@@ -76,17 +58,7 @@ namespace ScaleStore.Api.Controllers
         [HttpPut("UpdateOrder/{id}")]
         public async Task<IActionResult> UpdateOrder(int id, UpdateOrderDto dto)
         {
-            var validationResult = await _updateValidator.ValidateAsync(dto);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors.Select(e => new
-                {
-                    Field = e.PropertyName,
-                    Error = e.ErrorMessage
-                }));
-            }
-            var order = await _orderService.UpdateOrderAsync(id, dto);
+            await _orderService.UpdateOrderAsync(id, dto);
 
             return NoContent();
         }
