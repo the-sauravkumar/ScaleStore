@@ -1,0 +1,79 @@
+2026-08-16 15:11:47.375 +00:00 [INF] Starting ScaleStore Web API...
+2026-08-16 15:11:48.049 +00:00 [INF] Now listening on: http://localhost:5045
+2026-08-16 15:11:48.055 +00:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-08-16 15:11:48.060 +00:00 [INF] Hosting environment: Development
+2026-08-16 15:11:48.060 +00:00 [INF] Content root path: /workspaces/ScaleStore/ScaleStore.Api
+2026-08-16 15:11:58.629 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/ - null null
+2026-08-16 15:11:58.690 +00:00 [WRN] Failed to determine the https port for redirect.
+2026-08-16 15:11:58.693 +00:00 [INF] HTTP GET / responded 404 in 33.1525 ms
+2026-08-16 15:11:58.701 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/ - 404 0 null 75.7358ms
+2026-08-16 15:11:58.705 +00:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5045/, Response status code: 404
+2026-08-16 15:12:11.041 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger - null null
+2026-08-16 15:12:11.049 +00:00 [INF] HTTP GET /Swagger responded 301 in 2.4544 ms
+2026-08-16 15:12:11.056 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger - 301 0 null 15.3528ms
+2026-08-16 15:12:11.593 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/index.html - null null
+2026-08-16 15:12:11.648 +00:00 [INF] HTTP GET /Swagger/index.html responded 200 in 53.4042 ms
+2026-08-16 15:12:11.648 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/index.html - 200 null text/html;charset=utf-8 55.3479ms
+2026-08-16 15:12:12.283 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui.css - null null
+2026-08-16 15:12:12.302 +00:00 [INF] HTTP GET /Swagger/swagger-ui.css responded 200 in 17.7270 ms
+2026-08-16 15:12:12.303 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui.css - 200 26499 text/css 19.6745ms
+2026-08-16 15:12:12.312 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui-standalone-preset.js - null null
+2026-08-16 15:12:12.326 +00:00 [INF] HTTP GET /Swagger/swagger-ui-standalone-preset.js responded 200 in 13.3378 ms
+2026-08-16 15:12:12.327 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui-standalone-preset.js - 200 77731 text/javascript 14.5012ms
+2026-08-16 15:12:12.333 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/index.css - null null
+2026-08-16 15:12:12.334 +00:00 [INF] HTTP GET /Swagger/index.css responded 200 in 0.2627 ms
+2026-08-16 15:12:12.334 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/index.css - 200 152 text/css 1.4244ms
+2026-08-16 15:12:12.353 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui-bundle.js - null null
+2026-08-16 15:12:12.365 +00:00 [INF] HTTP GET /Swagger/swagger-ui-bundle.js responded 200 in 12.1594 ms
+2026-08-16 15:12:12.366 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/swagger-ui-bundle.js - 200 421507 text/javascript 13.6373ms
+2026-08-16 15:12:12.382 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/index.js - null null
+2026-08-16 15:12:12.383 +00:00 [INF] HTTP GET /Swagger/index.js responded 200 in 0.7737 ms
+2026-08-16 15:12:12.384 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/index.js - 200 null application/javascript;charset=utf-8 1.9074ms
+2026-08-16 15:12:13.335 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/v1/swagger.json - null null
+2026-08-16 15:12:13.355 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/Swagger/favicon-32x32.png - null null
+2026-08-16 15:12:13.358 +00:00 [INF] HTTP GET /Swagger/favicon-32x32.png responded 200 in 2.0560 ms
+2026-08-16 15:12:13.360 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/favicon-32x32.png - 200 628 image/png 4.8283ms
+2026-08-16 15:12:13.452 +00:00 [INF] HTTP GET /Swagger/v1/swagger.json responded 200 in 115.9268 ms
+2026-08-16 15:12:13.452 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/Swagger/v1/swagger.json - 200 null application/json;charset=utf-8 116.8996ms
+2026-08-16 15:12:37.659 +00:00 [INF] Request starting HTTP/1.1 GET http://localhost:5045/api/Customers/GetAllCustomers - null null
+2026-08-16 15:12:37.663 +00:00 [INF] Executing endpoint 'ScaleStore.Api.Controllers.CustomersController.GetAllCustomers (ScaleStore.Api)'
+2026-08-16 15:12:37.695 +00:00 [INF] Route matched with {action = "GetAllCustomers", controller = "Customers"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAllCustomers(ScaleStore.Core.DTOs.Customer.CustomerQueryParameters) on controller ScaleStore.Api.Controllers.CustomersController (ScaleStore.Api).
+2026-08-16 15:12:38.138 +00:00 [WRN] No store type was specified for the decimal property 'TotalAmount' on entity type 'Order'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-08-16 15:12:38.139 +00:00 [WRN] No store type was specified for the decimal property 'Price' on entity type 'Product'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+2026-08-16 15:12:38.210 +00:00 [INF] Executed action ScaleStore.Api.Controllers.CustomersController.GetAllCustomers (ScaleStore.Api) in 511.8697ms
+2026-08-16 15:12:38.211 +00:00 [INF] Executed endpoint 'ScaleStore.Api.Controllers.CustomersController.GetAllCustomers (ScaleStore.Api)'
+2026-08-16 15:12:38.213 +00:00 [ERR] An unhandled exception occured: Format of the initialization string does not conform to specification starting at index 0.
+System.ArgumentException: Format of the initialization string does not conform to specification starting at index 0.
+   at System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   at System.Data.Common.DbConnectionOptions.ParseInternal(Dictionary`2 parsetable, String connectionString, Boolean buildChain, Dictionary`2 synonyms, Boolean firstKey)
+   at System.Data.Common.DbConnectionOptions..ctor(String connectionString, Dictionary`2 synonyms, Boolean useOdbcRules)
+   at System.Data.Common.DbConnectionStringBuilder.set_ConnectionString(String value)
+   at Microsoft.Data.SqlClient.SqlConnectionStringBuilder..ctor(String connectionString)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.<>c.<get_IsMultipleActiveResultSetsEnabled>b__13_0(String cs)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.get_IsMultipleActiveResultSetsEnabled()
+   at Microsoft.EntityFrameworkCore.SqlServer.Query.Internal.SqlServerCompiledQueryCacheKeyGenerator.GenerateCacheKey(Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteCore[TResult](Expression query, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.ExecuteAsync[TResult](Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.GetAsyncEnumerator()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at ScaleStore.Infrastructure.Services.CustomerService.GetAllCustomersAsync(CustomerQueryParameters queryParams) in /workspaces/ScaleStore/ScaleStore.Infrastructure/Services/CustomerService.cs:line 42
+   at ScaleStore.Api.Controllers.CustomersController.GetAllCustomers(CustomerQueryParameters queryParams) in /workspaces/ScaleStore/ScaleStore.Api/Controllers/CustomersController.cs:line 25
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-08-16 15:12:38.233 +00:00 [ERR] HTTP GET /api/Customers/GetAllCustomers responded 500 in 571.4159 ms
+2026-08-16 15:12:38.240 +00:00 [INF] Request finished HTTP/1.1 GET http://localhost:5045/api/Customers/GetAllCustomers - 500 null application/json; charset=utf-8 580.3967ms
+2026-08-16 15:12:57.984 +00:00 [INF] Application is shutting down...
