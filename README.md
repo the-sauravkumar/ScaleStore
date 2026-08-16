@@ -151,7 +151,7 @@ ScaleStore
 
 ### Logging
 
-* [ ] Serilog
+* [x] Serilog
 * [ ] Structured Logging
 
 ### Error Handling
