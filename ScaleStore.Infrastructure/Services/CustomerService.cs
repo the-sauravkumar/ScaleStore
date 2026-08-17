@@ -3,6 +3,8 @@ using ScaleStore.Core.Interfaces;
 using ScaleStore.Infrastructure.Data;
 using ScaleStore.Core.DTOs.Customer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.Reflection.PortableExecutable;
 
 
 namespace ScaleStore.Infrastructure.Services
@@ -10,10 +12,14 @@ namespace ScaleStore.Infrastructure.Services
     public class CustomerService : ICustomerService
     {
         private readonly ScaleStoreDbContext _context;
+        private readonly ILogger<CustomerService> _logger;
 
-        public CustomerService(ScaleStoreDbContext context)
+        public CustomerService(
+            ScaleStoreDbContext context,
+            ILogger<CustomerService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<CustomerResponseDto>> GetAllCustomersAsync(CustomerQueryParameters queryParams)
@@ -50,6 +56,10 @@ namespace ScaleStore.Infrastructure.Services
         public async Task<CustomerResponseDto?> GetCustomerByIdAsync(int id)
         {
             var customer = await _context.Customers.FindAsync(id);
+
+            if (customer == null)
+                _logger.LogWarning("Customer with Id: {id} was not found in database", id);
+
             return customer?.ToResponseDto();
         }
 
@@ -68,7 +78,10 @@ namespace ScaleStore.Infrastructure.Services
             var customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
+            {
+                _logger.LogWarning("Customer with Id {id} was not found for update in database", id);
                 return false;
+            }
 
             customer.UpdateFromDto(dto);
             await _context.SaveChangesAsync();
@@ -81,7 +94,10 @@ namespace ScaleStore.Infrastructure.Services
             var customer = await _context.Customers.FindAsync(id);
 
             if (customer == null)
+            {
+                _logger.LogWarning("Customer with {id} not found for delete in database", id);
                 return false;
+            }
 
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();

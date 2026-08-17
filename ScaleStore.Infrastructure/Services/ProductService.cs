@@ -3,21 +3,30 @@ using ScaleStore.Core.Mappings;
 using ScaleStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using ScaleStore.Core.DTOs.Product;
+using Microsoft.Extensions.Logging;
 
 namespace ScaleStore.Infrastructure.Services
 {
     public class ProductService : IProductService
     {
         private readonly ScaleStoreDbContext _context;
+        private readonly ILogger<ProductService> _logger;
 
-        public ProductService(ScaleStoreDbContext context)
+        public ProductService(
+            ScaleStoreDbContext context,
+            ILogger<ProductService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<ProductResponseDto?> GetProductByIdAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+                _logger.LogWarning("Product with id: {id} was not found in database", id);
+                
             return product?.ToResponseDto();
         }
 
@@ -79,7 +88,10 @@ namespace ScaleStore.Infrastructure.Services
             var product = await _context.Products.FindAsync(id);
 
             if (product == null)
+            {
+                _logger.LogWarning("Product with id: {id} was not found for update in database", id);
                 return false;
+            }
 
             product.UpdateFromDto(dto);
             await _context.SaveChangesAsync();
@@ -91,7 +103,10 @@ namespace ScaleStore.Infrastructure.Services
             var product = await _context.Products.FindAsync(id);
 
             if (product == null)
+            {
+                _logger.LogWarning("Product with id: {id} was not found for deletion in database", id);
                 return false;
+            }
 
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
