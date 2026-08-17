@@ -4,21 +4,31 @@ using ScaleStore.Core.Mappings;
 using ScaleStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using ScaleStore.Core.DTOs.Order;
+using Microsoft.Extensions.Logging;
 
 namespace ScaleStore.Infrastructure.Services
 {
     public class OrderService : IOrderService
     {
         private readonly ScaleStoreDbContext _context;
+        private readonly ILogger<OrderService> _logger;
 
-        public OrderService(ScaleStoreDbContext context)
+        public OrderService(
+            ScaleStoreDbContext context,
+            ILogger<OrderService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<OrderResponseDto?> GetOrderByIdAsync(int id)
         {
             var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+                _logger.LogWarning("Order with {id} was not found in database", id);
+
+
             return order?.ToResponseDto();
         }
 
@@ -73,7 +83,10 @@ namespace ScaleStore.Infrastructure.Services
             var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
+            {
+                _logger.LogWarning("Order with id: {id} for update was not found in database.", id);
                 return false;
+            }
 
             order.UpdateFromDto(dto);
             await _context.SaveChangesAsync();
@@ -86,7 +99,10 @@ namespace ScaleStore.Infrastructure.Services
             var order = await _context.Orders.FindAsync(id);
 
             if (order == null)
+            {
+                _logger.LogWarning("Order with id {id} for delete was not found in database.", id);
                 return false;
+            }
 
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
