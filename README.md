@@ -80,6 +80,7 @@ ScaleStore
 │   ├── Dependencies
 │   ├── Properties
 │   ├── Controllers
+│   ├── Logs
 │   ├── Middleware
 │   ├── appsettings.json
 │   ├── Program.cs
@@ -90,7 +91,8 @@ ScaleStore
 │   ├── DTOs
 │   ├── Entities
 │   ├── Interfaces
-│   └── Mappings
+│   ├── Mappings
+│   └── Validators
 │
 └── ScaleStore.Infrastructure
     ├── Dependencies
