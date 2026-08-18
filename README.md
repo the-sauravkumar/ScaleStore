@@ -145,6 +145,11 @@ ScaleStore
 
 ## ⏳ Phase 2 — Production Readiness (*Current*)
 
+### Database Architecture (Refactoring)
+
+* [ ] Entity Relationships (Foreign Keys & Navigation Properties)
+* [ ] Complex LINQ Queries & EF Core `.Include()`
+
 ### Validation
 
 * [x] FluentValidation
@@ -152,7 +157,7 @@ ScaleStore
 ### Logging
 
 * [x] Serilog
-* [ ] Structured Logging
+* [x] Structured Logging
 
 ### Error Handling
 
@@ -195,6 +200,7 @@ New architectural patterns will be introduced.
 
 ### Database Performance
 
+* [ ] Mass Data Seeding & Bulk Inserts (10M+ rows via `SqlBulkCopy`)
 * [ ] SQL Query Optimization & Execution Plans
 * [ ] Index Tuning & Composite Indexes (Leftmost-prefix rule)
 * [ ] Eliminate N+1 Queries
