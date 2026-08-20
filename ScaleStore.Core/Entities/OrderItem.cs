@@ -2,6 +2,8 @@
 {
     public class OrderItem
     {
+        public int Id { get; set; }
+
         // Foreign Key to the Order
         public int OrderId { get; set; }
         public Order Order { get; set; } = null;

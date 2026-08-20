@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScaleStore.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using ScaleStore.Infrastructure.Data;
 namespace ScaleStore.Infrastructure.Migrations
 {
     [DbContext(typeof(ScaleStoreDbContext))]
-    partial class ScaleStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260820172155_AddEntityRelationships")]
+    partial class AddEntityRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
